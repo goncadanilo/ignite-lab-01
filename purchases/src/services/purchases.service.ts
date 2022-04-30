@@ -12,9 +12,14 @@ export class PurchasesService {
 
   listAllPurchases() {
     return this.prisma.purchases.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  listAllPurchasesByCustomerId(customerId: string) {
+    return this.prisma.purchases.findMany({
+      where: { customerId },
+      orderBy: { createdAt: 'desc' },
     });
   }
 
