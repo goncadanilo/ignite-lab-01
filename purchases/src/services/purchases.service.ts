@@ -19,7 +19,7 @@ export class PurchasesService {
   }
 
   async createPurchase({ customerId, productId }: CreatePurchaseParams) {
-    const product = await this.prisma.purchases.findUnique({
+    const product = await this.prisma.product.findUnique({
       where: { id: productId },
     });
 
