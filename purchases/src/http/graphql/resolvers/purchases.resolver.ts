@@ -19,8 +19,8 @@ import { Purchase } from '../model/purchase';
 export class PurchasesResolver {
   constructor(
     private purchasesService: PurchasesService,
-    private productsServices: ProductsService,
-    private customersServices: CustomersService,
+    private productsService: ProductsService,
+    private customersService: CustomersService,
   ) {}
 
   @Query(() => [Purchase])
@@ -31,7 +31,7 @@ export class PurchasesResolver {
 
   @ResolveField()
   product(@Parent() purchase: Purchase) {
-    return this.productsServices.getProductById(purchase.productId);
+    return this.productsService.getProductById(purchase.productId);
   }
 
   @Mutation(() => Purchase)
@@ -40,12 +40,12 @@ export class PurchasesResolver {
     @Args('data') data: CreatePurchaseInput,
     @CurrentUser() user: AuthUser,
   ) {
-    let customer = await this.customersServices.getCustomerByAuthUserId(
+    let customer = await this.customersService.getCustomerByAuthUserId(
       user.sub,
     );
 
     if (!customer) {
-      customer = await this.customersServices.createCustomer({
+      customer = await this.customersService.createCustomer({
         authUserId: user.sub,
       });
     }

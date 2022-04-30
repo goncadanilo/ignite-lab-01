@@ -7,16 +7,16 @@ import { Product } from '../model/product';
 
 @Resolver(() => Product)
 export class ProductsResolver {
-  constructor(private productsServices: ProductsService) {}
+  constructor(private productsService: ProductsService) {}
 
   @Query(() => [Product])
   products() {
-    return this.productsServices.listAllProducts();
+    return this.productsService.listAllProducts();
   }
 
   @Mutation(() => Product)
   @UseGuards(AuthorizationGuard)
   createProduct(@Args('data') data: CreateProductInput) {
-    return this.productsServices.createProduct(data);
+    return this.productsService.createProduct(data);
   }
 }
